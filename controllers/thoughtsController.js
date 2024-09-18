@@ -1,15 +1,17 @@
-const { Thoughts, User, Reaction, } = require('../models');
+const { Thoughts, User, } = require('../models');
 
 module.exports = {
   // Get all thoughtss
   async getThoughts(req, res) {
     try {
-      const thoughtss = await Thoughts.find().populate('users');
-      res.json(thoughtss);
+      const thoughts = await Thoughts.find();
+      res.status(200).json(thoughts);
     } catch (err) {
-      res.status(500).json(err);
+      console.error('Error in getThoughts:', err);
+      res.status(500).json({ message: 'Server error', error: err.message });
     }
   },
+
   // Get a thoughts
   async getSingleThought(req, res) {
     try {
@@ -25,11 +27,12 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+  
   // Create a thoughts
   async createThoughts(req, res) {
     try {
       const thoughts = await Thoughts.create(req.body);
-      res.json(thoughts);
+      res.status(200).json(thoughts);
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
@@ -91,7 +94,7 @@ module.exports = {
 
   async deleteReaction(req, res) {
     try {
-      const thought = await Thought.findByIdAndUpdate(
+      const thought = await Thoughts.findByIdAndUpdate(
         req.params.thoughtId,
         { $pull: { reactions: {reactionId : req.params.reactionId}} },
         { runValidators: true, new: true}

@@ -7,11 +7,10 @@ const reactionSchema = new Schema(
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
-    reactionName: {
+    reactionBody: {
       type: String,
       required: true,
-      maxlength: 200,
-      default: 'Unnamed reaction',
+      maxlenght: 280
     },
     username: {
       type: String,
@@ -21,7 +20,11 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: timestamp => timestamp.tolocaleString()
+      get: function(timestamp) {
+        return timestamp instanceof Date 
+          ? timestamp.toLocaleString() 
+          : new Date(timestamp).toLocaleString();
+      }
     },
   },
   {
