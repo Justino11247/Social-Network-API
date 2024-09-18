@@ -1,5 +1,5 @@
 const connection = require('../config/connection');
-const { Thoughts, User } = require('../models');
+const { Thought, User } = require('../models');
 
 
 connection.on('error', (err) => err);
@@ -58,13 +58,13 @@ connection.once('open', async () => {
     try {
       // Delete existing data
       await User.deleteMany({});
-      await Thoughts.deleteMany({});
+      await Thought.deleteMany({});
   
       // Create users
       const createdUsers = await User.create(users);
   
       // Create thoughts and associate them with users
-      const createdThoughts = await Thoughts.create(thoughts);
+      const createdThoughts = await Thought.create(thoughts);
   
       // Add thoughts to users
       for (const thought of createdThoughts) {
