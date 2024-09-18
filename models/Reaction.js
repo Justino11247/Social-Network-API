@@ -16,11 +16,12 @@ const reactionSchema = new Schema(
     username: {
       type: String,
       required: true,
-      ref: User,
+      ref: 'User',
     },
     createdAt: {
       type: Date,
       default: Date.now,
+      get: timestamp => timestamp.tolocaleString()
     },
   },
   {

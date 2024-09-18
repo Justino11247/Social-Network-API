@@ -24,12 +24,62 @@ connection.once('open', async () => {
 
   const thoughts = [
     {
-      thoughtText: '',
-
+      thoughtText: 'This is my first thought!',
+      username: 'justino',
+      reactions: [
+        {
+          reactionBody: 'Great thought!',
+          username: 'rosette'
+        },
+        {
+          reactionBody: 'I agree!',
+          username: 'maiko'
+        }
+      ]
     },
-  ]
-
-
+    {
+      thoughtText: 'Coding is fun!',
+      username: 'rosette',
+      reactions: [
+        {
+          reactionBody: 'Interesting perspective.',
+          username: 'justino'
+        }
+      ]
+    },
+    {
+      thoughtText: 'I love the weekend!',
+      username: 'maiko',
+      reactions: []
+    }
+  ];
+  
+  const seedDatabase = async () => {
+    try {
+      // Delete existing data
+      await User.deleteMany({});
+      await Thoughts.deleteMany({});
+  
+      // Create users
+      const createdUsers = await User.create(users);
+  
+      // Create thoughts and associate them with users
+      const createdThoughts = await Thoughts.create(thoughts);
+  
+      // Add thoughts to users
+      for (const thought of createdThoughts) {
+        const user = await User.findOne({ username: thought.username });
+        user.thoughts.push(thought._id);
+        await user.save();
+      }
+  
+      console.log('Database seeded successfully!');
+    } catch (error) {
+      console.error('Error seeding database:', error);
+    } 
+  };
+  
+  await seedDatabase();
 
   // Log out the seed data to indicate what should appear in the database
   console.table(users);

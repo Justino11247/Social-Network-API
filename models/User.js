@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose');
-const Thoughts = require('./Thoughts');
 const validator = require('validator');
 
 // Schema to create User model
@@ -9,17 +8,22 @@ const userSchema = new Schema(
       type: String,
       required: true,
       max_length: 20,
+      trim: true
     },
     email: {
       type: String,
       required: true,
       max_length: 20,
+      unique: true,
       validate: {
         validator: validator.isEmail,
         message: input => `${input} is not a valid email address!`
       }
     },
-    thoughts: [Thoughts],
+    thoughts: [{
+      type: Schema.Types.ObjectId, 
+      ref:'Thoughts'
+    }],
     friends: [{
       type: Schema.Types.ObjectId,
       ref: 'User'
@@ -28,10 +32,19 @@ const userSchema = new Schema(
   {
     toJSON: {
       getters: true,
+      getters: true
     },
+    id: false
   }
 );
 
-const User = model('user', userSchema);
+userSchema
+  .virtual('friendCount')
+  // Getter
+  .get(function () {
+    return `${this.friends.length}`;
+  });
+
+const User = model('User', userSchema);
 
 module.exports = User;
