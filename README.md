@@ -30,7 +30,7 @@ To install Social-Network-API:
 
 - Start the application, in the terminal by executing the following command: `npm start`
 
-[Link to Walkthrough Video]()
+[Link to Walkthrough Video](https://drive.google.com/file/d/1H-mlyASwcq2705M7bagYE05kqxdp_TXj/view?usp=sharing)
 
 ![Screenshot of Social-Network-API's 'Users' Test on Insomnia](./images/get%20users.png)
 
