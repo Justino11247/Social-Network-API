@@ -32,7 +32,7 @@ To install Social-Network-API:
 
 [Link to Walkthrough Video]()
 
-![Screenshot of Social-Network-API's 'Users' Test on Insomnia]()
+![Screenshot of Social-Network-API's 'Users' Test on Insomnia](./images/get%20users.png)
 
-![Screenshot of Social-Network-API's 'Thoughts' Test on Insomnia]()
+![Screenshot of Social-Network-API's 'Thoughts' Test on Insomnia](./images/get%20thoughts.png)
 

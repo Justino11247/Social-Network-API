@@ -1,27 +1,30 @@
 const { Schema, Types } = require('mongoose');
-const User = require('./User');
 
 const reactionSchema = new Schema(
   {
     reactionId: {
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
+      // This is used as a custom id for the reaction, separate from the default _id
     },
-    reactionName: {
+    reactionBody: {
       type: String,
       required: true,
-      maxlength: 200,
-      default: 'Unnamed reaction',
+      maxlength: 280
     },
     username: {
       type: String,
       required: true,
-      ref: 'User',
+      ref: 'User', // This creates a reference to the User model
     },
     createdAt: {
       type: Date,
       default: Date.now,
-      get: timestamp => timestamp.tolocaleString()
+      get: (timestamp) => {
+        return timestamp instanceof Date 
+          ? timestamp.toLocaleString() 
+          : new Date(timestamp).toLocaleString();
+      }
     },
   },
   {
